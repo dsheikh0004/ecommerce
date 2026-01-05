@@ -1,7 +1,7 @@
 :root {
     /* Premium elegant Yellow & White Theme */
     --bg-color: #ffffff; /* White */
-    --text-color: #1e293b; /* Slate 800 - Deep Dark Blue/Grey for text */
+    --text-color: #020617; /* Slate 950 - Very Dark, Vibrant Black-Blue */
     --primary-color: #ca8a04; /* Yellow 600 - Elegant Gold */
     --primary-light: #facc15; /* Yellow 400 - Brighter Gold */
     --accent-color: #854d0e; /* Yellow 800 - Darker Gold for accents */
@@ -560,7 +560,7 @@ nav a:hover {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 20px;
-    color: #64748b;
+    color: #334155;
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.3s;
@@ -686,7 +686,7 @@ footer {
     background-color: #f1f5f9; /* Slate 100 */
     padding: 3rem 2rem;
     text-align: center;
-    color: #64748b;
+    color: #334155;
     margin-top: 4rem;
     border-top: 1px solid rgba(0,0,0,0.05);
 }
@@ -897,7 +897,7 @@ footer {
 
 .empty-cart-msg {
     text-align: center;
-    color: #94a3b8;
+    color: #475569;
     margin-top: 2rem;
 }
 
@@ -1107,7 +1107,7 @@ footer {
 
 .detail-description {
     font-size: 1.15rem;
-    color: #334155;
+    color: #1e293b;
     line-height: 1.8;
 }
 
@@ -1189,7 +1189,7 @@ footer {
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #94a3b8;
+    color: #475569;
 }
 
 .form-control {
@@ -1337,7 +1337,7 @@ footer {
 }
 
 .auth-header p {
-    color: #94a3b8;
+    color: #475569;
     font-size: 0.95rem;
 }
 
@@ -1383,7 +1383,7 @@ footer {
     margin-top: 2rem;
     text-align: center;
     font-size: 0.9rem;
-    color: #94a3b8;
+    color: #475569;
 }
 
 .auth-footer a {
@@ -1402,7 +1402,7 @@ footer {
     position: absolute;
     top: 2rem;
     left: 2rem;
-    color: #94a3b8;
+    color: #475569;
     text-decoration: none;
     display: flex;
     align-items: center;
