@@ -729,7 +729,7 @@ footer {
 /* Featured Wrapper Background & Moving Graphics */
 .featured-wrapper {
     position: relative;
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)), url('images/featured_bg_light.png');
+    background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98)), url('images/featured_bg_light.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
