@@ -130,7 +130,7 @@ header {
 .logo {
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(90deg, #fff, var(--primary-color));
+    background: linear-gradient(90deg, var(--text-color), var(--primary-color));
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -729,7 +729,7 @@ footer {
 /* Featured Wrapper Background & Moving Graphics */
 .featured-wrapper {
     position: relative;
-    background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('images/featured-toys-bg.jpg');
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)), url('c:/Users/Hijazi Raza/.gemini/antigravity/brain/e9fd602c-9077-4d6c-baa0-2d3040a73bfd/featured_bg_light_1767625700531.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -1412,7 +1412,7 @@ footer {
 }
 
 .back-link:hover {
-    color: #fff;
+    color: var(--primary-color);
 }
 
 .error-msg {
