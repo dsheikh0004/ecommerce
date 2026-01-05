@@ -1,12 +1,15 @@
 :root {
-    /* Premium Dark Theme */
-    --bg-color: #0f172a; /* Slate 900 */
-    --text-color: #f8fafc; /* Slate 50 */
-    --primary-color: #6366f1; /* Indigo 500 */
-    --accent-color: #fbbf24; /* Amber/Gold */
-    --card-bg: rgba(30, 41, 59, 0.7); /* Slate 800 Glass */
+    /* Premium elegant Yellow & White Theme */
+    --bg-color: #ffffff; /* White */
+    --text-color: #1e293b; /* Slate 800 - Deep Dark Blue/Grey for text */
+    --primary-color: #ca8a04; /* Yellow 600 - Elegant Gold */
+    --primary-light: #facc15; /* Yellow 400 - Brighter Gold */
+    --accent-color: #854d0e; /* Yellow 800 - Darker Gold for accents */
+    --card-bg: rgba(255, 255, 255, 0.9); /* White Glass */
+    --card-border: rgba(202, 138, 4, 0.15); /* Subtle Gold Border */
     --font-main: 'Outfit', sans-serif;
     --transition-speed: 0.3s;
+    --shadow-main: 0 10px 30px rgba(0, 0, 0, 0.05); /* Soft shadow */
 }
 
 * {
@@ -18,12 +21,11 @@
 body {
     font-family: var(--font-main);
     background-color: var(--bg-color);
-    /* Dark Watermark Background */
-    background-image: linear-gradient(rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.98)), url('images/logo.png');
-    background-size: 250px;
-    background-repeat: repeat;
+    /* Light Elegant Background */
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(250, 204, 21, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(250, 204, 21, 0.05) 0px, transparent 50%);
     background-attachment: fixed;
-    background-blend-mode: multiply;
     color: var(--text-color);
     line-height: 1.6;
     overflow-x: hidden;
@@ -44,20 +46,20 @@ a {
 }
 
 /* Header */
+/* Header */
 header {
     position: fixed;
     top: 0;
     width: 100%;
     padding: 1.5rem 2rem;
-    background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('images/header-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(202, 138, 4, 0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
 }
 
 /* Mobile Menu Button - Hidden on Desktop */
@@ -121,7 +123,7 @@ header {
 }
 
 .mobile-nav-link:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(202, 138, 4, 0.1);
     color: var(--primary-color);
 }
 
@@ -147,6 +149,8 @@ nav a {
 
 nav a:hover {
     color: var(--primary-color);
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 /* Header Actions */
@@ -303,8 +307,8 @@ nav a:hover {
 .profile-icon {
     font-size: 1.8rem;
     transition: transform 0.2s;
-    background: rgba(255, 255, 255, 0.1);
-    width: 40px;
+    background: rgba(0, 0, 0, 0.05); /* Light grey bg */
+    width: 40px; /* Kept original width */
     height: 40px;
     display: flex;
     align-items: center;
@@ -322,12 +326,11 @@ nav a:hover {
     top: 100%;
     right: 0;
     width: 200px;
-    background: rgba(30, 41, 59, 0.95); /* High opacity for readability */
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border: 1px solid var(--card-border);
     border-radius: 12px;
     padding: 1rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
@@ -367,8 +370,8 @@ nav a:hover {
 }
 
 .profile-dropdown a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: rgba(202, 138, 4, 0.1);
+    color: var(--primary-color);
 }
 
 .profile-dropdown .btn-login {
@@ -387,7 +390,7 @@ nav a:hover {
     color: var(--accent-color);
     margin-bottom: 0.8rem;
     padding-bottom: 0.8rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
     font-size: 1.1rem;
 }
 
@@ -404,7 +407,8 @@ nav a:hover {
     position: relative;
     overflow: hidden;
     /* Fallback image if video fails */
-    background: url('images/hero-bg.jpg') no-repeat center center/cover;
+    /* Light Hero Background */
+    background: linear-gradient(to bottom, #fffaf0, #ffffff);
 }
 
 #hero-video {
@@ -431,19 +435,20 @@ nav a:hover {
 .hero h1 {
     font-size: 5rem;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--accent-color) 0%, #fff 100%);
+    /* Elegant Gold Gradient */
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
 }
 
 .hero p {
     font-size: 1.4rem;
-    color: #e2e8f0;
+    color: var(--text-color);
     max-width: 700px;
     margin: 0 auto 2.5rem auto;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    font-weight: 500;
 }
 
 .cta-btn {
@@ -528,10 +533,10 @@ nav a:hover {
 .search-box input {
     width: 100%;
     padding: 0.8rem 1.5rem;
-    background: rgba(30, 41, 59, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #f8fafc; /* Slate 50 */
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 30px;
-    color: white;
+    color: var(--text-color);
     font-family: inherit;
     font-size: 1rem;
     transition: all 0.3s;
@@ -552,10 +557,10 @@ nav a:hover {
 
 .chip {
     padding: 0.6rem 1.2rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 20px;
-    color: #94a3b8;
+    color: #64748b;
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.3s;
@@ -563,8 +568,9 @@ nav a:hover {
 }
 
 .chip:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: rgba(202, 138, 4, 0.05);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .chip.active {
@@ -594,21 +600,20 @@ nav a:hover {
 }
 
 .product-card {
-    background-color: rgba(30, 41, 59, 0.65); /* Dark Glass */
-    backdrop-filter: blur(12px);
+    background-color: var(--card-bg);
     border-radius: 16px;
     overflow: hidden;
-    transition: transform var(--transition-speed);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-speed);
+    border: 1px solid var(--card-border);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-main);
 }
 
 .product-card:hover {
-    transform: translateY(-15px) scale(1.02);
-    border-color: rgba(99, 102, 241, 0.5);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.2);
+    transform: translateY(-10px);
+    border-color: var(--primary-color);
+    box-shadow: 0 20px 40px -10px rgba(202, 138, 4, 0.2);
     z-index: 10;
 }
 
@@ -616,7 +621,8 @@ nav a:hover {
     width: 100%;
     height: 250px;
     object-fit: cover;
-    background-color: #334155;
+    object-fit: cover;
+    background-color: #f1f5f9; /* Slate 100 */
     transition: transform 0.5s ease;
 }
 
@@ -629,7 +635,9 @@ nav a:hover {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.3));
+    display: flex;
+    flex-direction: column;
+    background: transparent;
 }
 
 .product-name {
@@ -644,7 +652,8 @@ nav a:hover {
     color: var(--accent-color);
     font-weight: 700;
     margin-bottom: 1rem;
-    text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 
 .add-to-cart-btn {
@@ -657,6 +666,8 @@ nav a:hover {
     border-radius: 12px;
     cursor: pointer;
     font-weight: 600;
+    cursor: pointer;
+    font-weight: 700;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -666,17 +677,18 @@ nav a:hover {
 .add-to-cart-btn:hover {
     background-color: var(--primary-color);
     color: white;
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+    box-shadow: 0 5px 15px rgba(202, 138, 4, 0.4);
     transform: translateY(-2px);
 }
 
 /* Footer */
 footer {
-    background-color: #020617;
+    background-color: #f1f5f9; /* Slate 100 */
     padding: 3rem 2rem;
     text-align: center;
     color: #64748b;
     margin-top: 4rem;
+    border-top: 1px solid rgba(0,0,0,0.05);
 }
 
 /* Animations */
@@ -784,13 +796,13 @@ footer {
     /* Hidden by default */
     width: 350px;
     height: 100%;
-    background-color: var(--card-bg);
-    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+    background-color: #ffffff;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
     z-index: 2000;
     transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .cart-sidebar.open {
@@ -943,11 +955,11 @@ footer {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: start;
-    background: rgba(30, 41, 59, 0.4);
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(20px);
     border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 25px 50px -12px rgba(202, 138, 4, 0.1);
     animation: fadeInUpDetail 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
@@ -956,8 +968,8 @@ footer {
     top: 120px;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
 .detail-image-wrapper img {
@@ -1031,7 +1043,7 @@ footer {
 .pd-title {
     font-size: 3.5rem;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    background: linear-gradient(135deg, var(--text-color) 0%, #475569 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1048,7 +1060,7 @@ footer {
 .pd-description {
     font-size: 1.2rem;
     line-height: 1.8;
-    color: #94a3b8;
+    color: var(--text-color);
     margin-bottom: 3rem;
 }
 
@@ -1081,7 +1093,7 @@ footer {
 .detail-title {
     font-size: 3.5rem;
     line-height: 1.1;
-    background: linear-gradient(90deg, #fff, var(--primary-color));
+    background: linear-gradient(90deg, var(--text-color), var(--primary-color));
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1095,7 +1107,7 @@ footer {
 
 .detail-description {
     font-size: 1.15rem;
-    color: #cbd5e1;
+    color: #334155;
     line-height: 1.8;
 }
 
@@ -1152,7 +1164,7 @@ footer {
     align-items: center;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(202, 138, 4, 0.1);
 }
 
 .admin-grid {
@@ -1166,7 +1178,8 @@ footer {
     padding: 2rem;
     border-radius: 16px;
     margin-bottom: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-main);
 }
 
 .form-group {
@@ -1182,9 +1195,9 @@ footer {
 .form-control {
     width: 100%;
     padding: 0.8rem;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    background: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
     border-radius: 8px;
     font-family: inherit;
 }
@@ -1211,7 +1224,7 @@ footer {
 .product-table td {
     text-align: left;
     padding: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
     white-space: nowrap; /* Prevent breaking on small screens */
 }
 
@@ -1257,9 +1270,9 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
     position: relative;
     overflow: hidden;
+    background-color: #ffffff;
 }
 
 /* Ambient Background */
@@ -1300,10 +1313,10 @@ footer {
 }
 
 .auth-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--card-border);
     border-radius: 20px;
     padding: 3rem 2rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
@@ -1317,7 +1330,7 @@ footer {
 .auth-header h1 {
     font-size: 2rem;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    background: linear-gradient(135deg, var(--text-color) 0%, #475569 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -1330,10 +1343,10 @@ footer {
 .form-input {
     width: 100%;
     padding: 0.8rem 1rem;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    color: #fff;
+    color: var(--text-color);
     font-family: inherit;
     transition: all 0.3s ease;
 }
@@ -1341,7 +1354,7 @@ footer {
 .form-input:focus {
     outline: none;
     border-color: var(--primary-color);
-    background: rgba(0, 0, 0, 0.4);
+    background: #fff;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
