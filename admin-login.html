@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Treasure Toys</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #020617; /* Darker background for admin */
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Admin Ambient Background - Red/Blue mix */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, #4f46e5 0%, transparent 60%);
+            opacity: 0.1;
+            filter: blur(100px);
+            z-index: -1;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, #ef4444 0%, transparent 60%); /* Red for Admin */
+            opacity: 0.1;
+            filter: blur(100px);
+            z-index: -1;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glassmorphism Card */
+        .auth-card {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-top: 2px solid #ef4444; /* Red Top indicator */
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .auth-header p {
+            color: var(--gray-400);
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--gray-300);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--gray-700);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ef4444;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(220, 38, 38, 0.3);
+        }
+
+        .back-link {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: var(--gray-500);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        .error-msg {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-link">← Back to Store</a>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Admin Portal</h1>
+                <p>Authorized personnel only</p>
+            </div>
+
+            <div id="error-box" class="error-msg"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Username</label>
+                    <input type="text" id="email" class="form-input" placeholder="admin" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="submit-btn" id="login-btn">Secure Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="store-engine.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const errorBox = document.getElementById('error-box');
+            const loginBtn = document.getElementById('login-btn');
+
+            // Reset UI
+            errorBox.style.display = 'none';
+            loginBtn.textContent = 'Verifying Credentials...';
+            loginBtn.disabled = true;
+
+            setTimeout(() => { 
+                const result = StoreEngine.loginUser(email, password);
+
+                if (result.success) {
+                    if (result.user.isAdmin) {
+                        window.location.href = 'admin.html';
+                    } else {
+                        // Reject non-admins
+                        errorBox.textContent = "Access Denied: Not an administrator account.";
+                        errorBox.style.display = 'block';
+                        loginBtn.textContent = 'Secure Login';
+                        loginBtn.disabled = false;
+                        StoreEngine.logoutUser(); // Logout the non-admin immediately
+                    }
+                } else {
+                    errorBox.textContent = result.message;
+                    errorBox.style.display = 'block';
+                    loginBtn.textContent = 'Secure Login';
+                    loginBtn.disabled = false;
+                }
+            }, 800);
+        });
+    </script>
+</body>
+</html>

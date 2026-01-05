@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Treasure Toys</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Checkout Specific Styles */
+        body {
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .checkout-container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .checkout-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            background: linear-gradient(90deg, #fff, var(--primary-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .payment-method {
+            margin-bottom: 2rem;
+        }
+
+        .payment-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .payment-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-option {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .payment-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+        }
+
+        .payment-option svg {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 0.5rem;
+            fill: currentColor;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background-color: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Success Animation */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        .success-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Treasure Toys logo" class="site-logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="checkout-container" style="margin-top: 100px;">
+        <h1 class="checkout-title">Secure Checkout</h1>
+
+        <div class="payment-method">
+            <span class="payment-label">Select Payment Method</span>
+            <div class="payment-options">
+                <div class="payment-option selected" onclick="selectMethod('upi')">
+                    <!-- UPI Icon Placeholder -->
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📱</div>
+                    <div>UPI</div>
+                </div>
+                <div class="payment-option" onclick="selectMethod('card')">
+                    <!-- Card Icon Placeholder -->
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💳</div>
+                    <div>Card</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UPI Form -->
+        <div id="upi-form">
+            <div class="form-group">
+                <label>UPI ID (e.g., user@okhdfc)</label>
+                <input type="text" class="form-input" placeholder="Enter your UPI ID">
+            </div>
+        </div>
+
+        <!-- Card Form -->
+        <div id="card-form" class="hidden">
+            <div class="form-group">
+                <label>Card Number</label>
+                <input type="text" class="form-input" placeholder="0000 0000 0000 0000">
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Expiry</label>
+                    <input type="text" class="form-input" placeholder="MM/YY">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>CVV</label>
+                    <input type="password" class="form-input" placeholder="123">
+                </div>
+            </div>
+        </div>
+
+        <button class="checkout-btn" onclick="processPayment()">Pay Securely</button>
+        <a href="index.html" class="back-link">← Cancel and go back</a>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-overlay" class="success-overlay">
+        <div class="success-icon">🎉</div>
+        <h2>Payment Successful!</h2>
+        <p style="color: #94a3b8; margin-top: 0.5rem;">Your toys are on the way.</p>
+        <button class="checkout-btn" style="width: auto; margin-top: 2rem; padding: 0.75rem 2rem;"
+            onclick="window.location.href='index.html'">Return Home</button>
+    </div>
+
+    <footer style="margin-top: 5rem; padding-bottom: 2rem;">
+        <p>&copy; 2026 Treasure Toys Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function selectMethod(method) {
+            // UI Toggle
+            const options = document.querySelectorAll('.payment-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            // Form Toggle
+            const upiForm = document.getElementById('upi-form');
+            const cardForm = document.getElementById('card-form');
+
+            if (method === 'upi') {
+                upiForm.classList.remove('hidden');
+                cardForm.classList.add('hidden');
+            } else {
+                upiForm.classList.add('hidden');
+                cardForm.classList.remove('hidden');
+            }
+        }
+
+        function processPayment() {
+            const btn = document.querySelector('.checkout-btn');
+            btn.textContent = "Processing...";
+            btn.style.opacity = "0.7";
+
+            // Fake delay
+            setTimeout(() => {
+                document.getElementById('success-overlay').classList.add('visible');
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>

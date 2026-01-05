@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Treasure Toys</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .about-hero {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(30, 41, 59, 0.5) 100%);
+        }
+
+        .about-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #fff, var(--primary-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            color: #cbd5e1;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            text-align: left;
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .contact-icon {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .social-link {
+            color: var(--primary-color);
+            text-decoration: underline;
+            transition: color 0.3s;
+        }
+
+        .social-link:hover {
+            color: #fff;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 0.8rem 2rem;
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-home:hover {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container" onclick="window.location.href='index.html'" style="cursor: pointer;">
+            <img src="images/logo.png" alt="Treasure Toys logo" class="site-logo">
+        </div>
+
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#products">Collection</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        
+        <div class="header-actions">
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒 <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Nav Overlay -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay" onclick="toggleMobileMenu()">
+        <div class="mobile-nav-content" onclick="event.stopPropagation()">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="font-size: 1.5rem;">Menu</h2>
+                <button onclick="toggleMobileMenu()" style="background:none; border:none; color:white; font-size: 2rem;">×</button>
+            </div>
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="index.html#products" class="mobile-nav-link">Collection</a>
+            <a href="about.html" class="mobile-nav-link">About</a>
+        </div>
+    </div>
+
+    <main>
+        <section class="about-hero">
+            <h1>Our Story</h1>
+            
+            <div class="about-content">
+                <p>Welcome to <strong>Treasure Toys</strong>, where imagination meets innovation. Founded with a passion for bringing joy to children and collectors alike, we curate the finest selection of premium toys from around the galaxy.</p>
+                
+                <p>Our mission is simple: <strong>to inspire the next generation of creators, dreamers, and explorers.</strong> whether you're looking for educational building sets, futuristic robots, or classic wooden treasures, every item in our collection is hand-picked for quality, safety, and endless fun.</p>
+
+                <p>We believe that play is the highest form of research. That's why we don't just sell toys—we sell experiences that spark curiosity and create lasting memories.</p>
+
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <br>
+                    <div class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        <span>Phone: <strong>7634802123</strong></span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📸</span>
+                        <span>Instagram: <a href="https://instagram.com/hijazi_raza" target="_blank" class="social-link">@hijazi_raza</a></span>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <a href="index.html" class="back-home">← Return to Store</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Items injected by script.js -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">₹0</span>
+            </div>
+            <button class="checkout-btn">Checkout</button>
+        </div>
+    </div>
+
+    <script src="store-engine.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

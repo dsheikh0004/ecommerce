@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Treasure Toys</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="product-detail-page">
+
+    <header>
+        <div class="logo-container" onclick="window.location.href='index.html'" style="cursor: pointer;">
+            <img src="images/logo.png" alt="Treasure Toys logo" class="site-logo">
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#products">Collection</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒 <span class="cart-count">0</span>
+        </div>
+    </header>
+
+    <!-- Mobile Nav Overlay -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay" onclick="toggleMobileMenu()">
+        <div class="mobile-nav-content" onclick="event.stopPropagation()">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="font-size: 1.5rem;">Menu</h2>
+                <button onclick="toggleMobileMenu()" style="background:none; border:none; color:white; font-size: 2rem;">×</button>
+            </div>
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="index.html#products" class="mobile-nav-link">Collection</a>
+            <a href="about.html" class="mobile-nav-link">About</a>
+            <hr style="border-color: rgba(255,255,255,0.1);">
+            <a href="login.html" class="mobile-nav-link">Login</a>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <p class="empty-cart-msg">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: <span id="cart-total-price">₹0</span></div>
+            <button class="checkout-btn">Checkout</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+
+    <main class="container">
+        <div class="moving-particles"></div>
+        <div id="product-detail-content" class="reveal">
+            <!-- Loading State -->
+            <div style="text-align: center; padding: 5rem;">
+                <h2>Loading magical details...</h2>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Treasure Toys Store. All rights reserved.</p>
+    </footer>
+
+    <script src="store-engine.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Mobile Menu Toggle logic (local for now, will move to script.js ideally but good here for redundancy if script fails)
+        function toggleMobileMenu() {
+            const overlay = document.getElementById('mobile-nav-overlay');
+            overlay.classList.toggle('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const productId = parseInt(params.get('id'));
+            
+            const product = StoreEngine.getProducts().find(p => p.id === productId);
+            const container = document.getElementById('product-detail-content');
+
+            if (!product) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 5rem;">
+                        <h2 style="font-size: 3rem; margin-bottom: 2rem;">Product Not Found</h2>
+                        <button class="cta-btn" onclick="window.location.href='index.html'">Back to Store</button>
+                    </div>
+                `;
+                return;
+            }
+
+            document.title = `${product.name} | Treasure Toys`;
+
+            // Refactored to use CSS classes
+            container.innerHTML = `
+                <button class="pd-back-btn" onclick="window.location.href='index.html#products'">
+                    ← Back to Collection
+                </button>
+                <div class="detail-container pd-grid">
+                    <div class="detail-image-wrapper pd-image-box">
+                        <img src="${product.image}" alt="${product.name}" class="pd-image">
+                    </div>
+                    <div class="detail-info">
+                        <span class="pd-category-tag">${product.category || 'General'}</span>
+                        <h1 class="pd-title">${product.name}</h1>
+                        <div class="pd-price">₹${product.price ? product.price.toLocaleString('en-IN') : '0'}</div>
+                        <p class="pd-description">
+                            ${product.description || "Experience the pinnacle of creative play. This premium toy is designed to spark imagination and provide hours of engaging fun for creators of all ages. Crafted with quality materials and futuristic aesthetics."}
+                        </p>
+                        <div class="detail-actions">
+                            <button class="cta-btn pd-cta" onclick="addToCart(${product.id})">Add to Premium Cart</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            setTimeout(() => container.classList.add('active'), 100);
+        });
+    </script>
+</body>
+</html>

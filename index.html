@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Toys | The Future of Play</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <meta name="description" content="Premium toy store by Hijazi Raza. Discover the future of play.">
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Treasure Toys logo" class="site-logo">
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#products">Collection</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        
+        <div class="header-actions">
+            <div class="profile-container" id="profile-container">
+                <div class="profile-icon">👤</div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒 <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Nav Overlay -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay" onclick="toggleMobileMenu()">
+        <div class="mobile-nav-content" onclick="event.stopPropagation()">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="font-size: 1.5rem;">Menu</h2>
+                <button onclick="toggleMobileMenu()" style="background:none; border:none; color:white; font-size: 2rem;">×</button>
+            </div>
+            <a href="#" class="mobile-nav-link">Home</a>
+            <a href="#products" class="mobile-nav-link">Collection</a>
+            <a href="about.html" class="mobile-nav-link">About</a>
+            <hr style="border-color: rgba(255,255,255,0.1);">
+            <a href="login.html" class="mobile-nav-link">Login</a>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <!-- Cart items will be rendered here -->
+            <p class="empty-cart-msg">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: <span id="cart-total-price">₹0</span></div>
+            <button class="checkout-btn">Checkout</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+
+    <main>
+        <section class="hero">
+            <video autoplay muted loop playsinline id="hero-video">
+                <source src="images/hero-video.mp4" type="video/mp4">
+            </video>
+            
+            <div class="hero-content">
+                <h1>The Future of Play</h1>
+                <p>Curated collection of imagination-sparking toys for next-gen creators.</p>
+                <button class="cta-btn" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Explore Collection</button>
+            </div>
+        </section>
+
+        <!-- Catalog Controls -->
+        <div class="catalog-controls container">
+            <div class="search-box">
+                <input type="text" id="product-search" placeholder="Search for toys..." oninput="handleCatalogUpdate()">
+            </div>
+            <div class="filter-chips" id="category-filters">
+                <button class="chip active" onclick="setCategory('All')">All</button>
+                <button class="chip" onclick="setCategory('Robots')">Robots</button>
+                <button class="chip" onclick="setCategory('Space')">Space</button>
+                <button class="chip" onclick="setCategory('Drones')">Drones</button>
+                <button class="chip" onclick="setCategory('Educational')">Educational</button>
+            </div>
+        </div>
+
+    <div class="featured-wrapper">
+        <div class="moving-particles"></div> <!-- Moving graphics background -->
+        <section id="products" class="container reveal">
+            <h2 class="section-title">Featured Arrivals</h2>
+            <div id="product-grid" class="product-grid">
+                <!-- Products will be injected here by JS -->
+            </div>
+        </section>
+    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Treasure Toys Store. All rights reserved.</p>
+    </footer>
+
+    <script src="store-engine.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

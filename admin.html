@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Treasure Toys</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-page" style="display: none;">
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Treasure Toys logo" class="site-logo">
+        </div>
+        
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">View Store</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Mobile Nav Overlay -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay" onclick="toggleMobileMenu()">
+        <div class="mobile-nav-content" onclick="event.stopPropagation()">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="font-size: 1.5rem;">Admin</h2>
+                <button onclick="toggleMobileMenu()" style="background:none; border:none; color:white; font-size: 2rem;">×</button>
+            </div>
+            <a href="index.html" class="mobile-nav-link">View Store</a>
+            <a href="#" onclick="StoreEngine.logoutUser(); window.location.href='admin-login.html';" class="mobile-nav-link" style="color: #ef4444;">Logout</a>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Product Management</h1>
+            <button class="btn-primary" onclick="resetDefaults()">Reset to Defaults</button>
+        </div>
+
+        <div class="admin-grid">
+            <div class="form-card">
+                <h3>Add New Product</h3>
+                <form id="addProductForm" onsubmit="handleAddProduct(event)">
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" class="form-control" id="pName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" class="form-control" id="pPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control" id="pCategory">
+                            <option value="Robots">Robots</option>
+                            <option value="Space">Space</option>
+                            <option value="Drones">Drones</option>
+                            <option value="Educational">Educational</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="text" class="form-control" id="pImage" placeholder="images/product-X.jpg" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" id="pDesc" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Add Product</button>
+                </form>
+            </div>
+
+            <div class="form-card">
+                <h3>Manage Inventory</h3>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="adminSearch" placeholder="Search inventory..." oninput="renderAdminTable()">
+                </div>
+                <div class="table-wrapper" style="max-height: 400px; overflow-y: auto; border-radius: 8px;">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="success-overlay" style="background: rgba(15, 23, 42, 0.9);">
+        <div class="checkout-container" style="max-width: 450px;">
+            <h2 style="margin-bottom: 1.5rem;">Edit Product</h2>
+            <form id="editForm" onsubmit="handleUpdateProduct(event)">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label>Price (₹)</label>
+                    <input type="number" class="form-control" id="editPrice" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-control" id="editCategory">
+                        <option value="Robots">Robots</option>
+                        <option value="Space">Space</option>
+                        <option value="Drones">Drones</option>
+                        <option value="Educational">Educational</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" id="editDesc" rows="3"></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="submit" class="btn-primary" style="flex: 1;">Save Changes</button>
+                    <button type="button" class="btn-delete" style="flex: 1;" onclick="closeEditModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="store-engine.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Admin specific logic
+        // Renaming to avoid conflict with script.js 'currentUser'
+        const adminUser = StoreEngine.getCurrentUser();
+        
+        // Security Check
+        if (!adminUser || !adminUser.isAdmin) {
+            window.location.href = 'admin-login.html';
+        } else {
+            // Reveal Page
+            document.body.style.display = 'block';
+        }
+
+        // Add Logout Button
+        if (adminUser) {
+            const headerNav = document.querySelector('nav ul');
+            const logoutItem = document.createElement('li');
+            logoutItem.innerHTML = `<a href="#" onclick="StoreEngine.logoutUser(); window.location.href='admin-login.html';" style="color: #ef4444;">Logout (${adminUser.name})</a>`;
+            headerNav.appendChild(logoutItem);
+        }
+
+        // We reuse the 'script.js' which initializes 'defaultProducts' and loads 'products' from localStorage.
+        // Wait for script.js to initialize
+        
+        function renderAdminTable() {
+            const query = document.getElementById('adminSearch').value.toLowerCase();
+            const allProducts = StoreEngine.getProducts();
+            const filtered = allProducts.filter(p => p.name.toLowerCase().includes(query));
+
+            const tbody = document.getElementById('inventoryTable');
+            tbody.innerHTML = '';
+
+            filtered.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><img src="${p.image}" alt="img"></td>
+                    <td>${p.name}</td>
+                    <td>₹${p.price.toLocaleString('en-IN')}</td>
+                    <td>
+                        <button class="btn-primary" style="padding: 0.4rem 0.8rem; margin-right: 0.5rem;" onclick="openEditModal(${p.id})">Edit</button>
+                        <button class="btn-delete" onclick="handleDeleteProduct(${p.id})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.handleAddProduct = (e) => {
+            e.preventDefault();
+            const product = {
+                name: document.getElementById('pName').value,
+                price: Number(document.getElementById('pPrice').value),
+                category: document.getElementById('pCategory').value,
+                image: document.getElementById('pImage').value,
+                description: document.getElementById('pDesc').value
+            };
+
+            StoreEngine.addProduct(product);
+            alert('Product Added!');
+            document.getElementById('addProductForm').reset();
+            renderAdminTable();
+        }
+
+        window.openEditModal = (id) => {
+            const product = StoreEngine.getProducts().find(p => p.id === id);
+            if (product) {
+                document.getElementById('editId').value = product.id;
+                document.getElementById('editName').value = product.name;
+                document.getElementById('editPrice').value = product.price;
+                document.getElementById('editCategory').value = product.category || 'Robots';
+                document.getElementById('editDesc').value = product.description || '';
+                document.getElementById('editModal').classList.add('visible');
+            }
+        }
+
+        window.closeEditModal = () => {
+            document.getElementById('editModal').classList.remove('visible');
+        }
+
+        window.handleUpdateProduct = (e) => {
+            e.preventDefault();
+            const id = Number(document.getElementById('editId').value);
+            const data = {
+                name: document.getElementById('editName').value,
+                price: Number(document.getElementById('editPrice').value),
+                category: document.getElementById('editCategory').value,
+                description: document.getElementById('editDesc').value
+            };
+
+            StoreEngine.updateProduct(id, data);
+            closeEditModal();
+            renderAdminTable();
+        }
+
+        window.handleDeleteProduct = (id) => {
+            if(confirm('Are you sure?')) {
+                StoreEngine.deleteProduct(id);
+                renderAdminTable();
+            }
+        }
+
+        window.resetDefaults = () => {
+            if(confirm('Reset to original premium products?')) {
+                StoreEngine.resetDefaults();
+                location.reload();
+            }
+        }
+
+        // Init
+        setTimeout(renderAdminTable, 500); // Small delay to ensure script.js runs
+    </script>
+</body>
+</html>
