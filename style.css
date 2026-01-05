@@ -1331,6 +1331,7 @@ footer {
     font-size: 2rem;
     margin-bottom: 0.5rem;
     background: linear-gradient(135deg, var(--text-color) 0%, #475569 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
