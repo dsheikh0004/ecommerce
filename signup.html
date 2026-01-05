@@ -37,12 +37,17 @@
                     <input type="email" id="email" class="form-input" placeholder="name@example.com" required>
                 </div>
 
+                <div class="form-group" id="otp-group" style="display: none;">
+                    <label for="otp">Verification Code</label>
+                    <input type="text" id="otp" class="form-input" placeholder="Enter 6-digit code">
+                </div>
+
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" class="form-input" placeholder="Create a password" required minlength="6">
                 </div>
 
-                <button type="submit" class="submit-btn" id="signup-btn">Create Account</button>
+                <button type="submit" class="submit-btn" id="signup-btn">Verify Email</button>
             </form>
 
             <div class="auth-footer">
@@ -53,32 +58,75 @@
 
     <script src="store-engine.js"></script>
     <script>
+        let isOtpSent = false;
+
         document.getElementById('signup-form').addEventListener('submit', (e) => {
             e.preventDefault();
             
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
+            const otpCode = document.getElementById('otp').value.trim();
+            
             const errorBox = document.getElementById('error-box');
             const signupBtn = document.getElementById('signup-btn');
+            const otpGroup = document.getElementById('otp-group');
 
             // Reset UI
             errorBox.style.display = 'none';
-            signupBtn.textContent = 'Creating Account...';
-            signupBtn.disabled = true;
 
-            setTimeout(() => {
-                const result = StoreEngine.registerUser(name, email, password);
+            if (!isOtpSent) {
+                // STAGE 1: REQUEST OTP
+                signupBtn.textContent = 'Sending Code...';
+                signupBtn.disabled = true;
 
-                if (result.success) {
-                    window.location.href = 'index.html'; // Auto-login redirect
-                } else {
-                    errorBox.textContent = result.message;
-                    errorBox.style.display = 'block';
-                    signupBtn.textContent = 'Create Account';
-                    signupBtn.disabled = false;
-                }
-            }, 600);
+                setTimeout(() => {
+                    const result = StoreEngine.sendOTP(email);
+
+                    if (result.success) {
+                        isOtpSent = true;
+                        otpGroup.style.display = 'block';
+                        document.getElementById('otp').required = true;
+                        signupBtn.textContent = 'Verify & Create Account';
+                        signupBtn.disabled = false;
+                        document.getElementById('email').readOnly = true; // Lock email
+                    } else {
+                        errorBox.textContent = result.message;
+                        errorBox.style.display = 'block';
+                        signupBtn.textContent = 'Verify Email';
+                        signupBtn.disabled = false;
+                    }
+                }, 800);
+
+            } else {
+                // STAGE 2: VERIFY & REGISTER
+                signupBtn.textContent = 'Verifying...';
+                signupBtn.disabled = true;
+
+                setTimeout(() => {
+                    const verifyResult = StoreEngine.verifyOTP(email, otpCode);
+
+                    if (verifyResult.success) {
+                        // OTP Valid -> Register User
+                        signupBtn.textContent = 'Creating Account...';
+                        
+                        const regResult = StoreEngine.registerUser(name, email, password);
+                        if (regResult.success) {
+                            window.location.href = 'index.html';
+                        } else {
+                            // Should not happen if sendOTP checked email, but safety check
+                            errorBox.textContent = regResult.message;
+                            errorBox.style.display = 'block';
+                            signupBtn.disabled = false;
+                        }
+                    } else {
+                        errorBox.textContent = verifyResult.message;
+                        errorBox.style.display = 'block';
+                        signupBtn.textContent = 'Verify & Create Account';
+                        signupBtn.disabled = false;
+                    }
+                }, 800);
+            }
         });
     </script>
 </body>

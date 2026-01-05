@@ -137,6 +137,43 @@ const StoreEngine = (() => {
         sessionStorage.removeItem(CURRENT_USER_KEY);
     };
 
+    // --- OTP Verification Methods (Simulated) ---
+    
+    const sendOTP = (email) => {
+        // Check if email already registered
+        const users = getUsers();
+        if (users.find(u => u.email === email)) {
+            return { success: false, message: "Email already registered." };
+        }
+
+        // Generate 6-digit code
+        const otpCodes = JSON.parse(sessionStorage.getItem('otp_codes') || '{}');
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        
+        // Save code
+        otpCodes[email] = code;
+        sessionStorage.setItem('otp_codes', JSON.stringify(otpCodes));
+
+        // SIMULATION: Log to console and Alert
+        console.log(`[SIMULATED EMAIL] OTP for ${email}: ${code}`);
+        alert(`[SIMULATED EMAIL]\n\nYour Verification Code is: ${code}`);
+
+        return { success: true, message: "OTP sent to " + email };
+    };
+
+    const verifyOTP = (email, code) => {
+        const otpCodes = JSON.parse(sessionStorage.getItem('otp_codes') || '{}');
+        const storedCode = otpCodes[email];
+
+        if (storedCode && storedCode === code) {
+            // Clear used code
+            delete otpCodes[email];
+            sessionStorage.setItem('otp_codes', JSON.stringify(otpCodes));
+            return { success: true };
+        }
+        return { success: false, message: "Invalid verification code." };
+    };
+
     return {
         getProducts,
         addProduct,
@@ -149,7 +186,9 @@ const StoreEngine = (() => {
         getCurrentUser,
         registerUser,
         loginUser,
-        logoutUser
+        logoutUser,
+        sendOTP,
+        verifyOTP
     };
 })();
 
