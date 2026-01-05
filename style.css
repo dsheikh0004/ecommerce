@@ -357,7 +357,7 @@ nav a:hover {
 .profile-dropdown a {
     display: block;
     padding: 0.8rem;
-    color: #e2e8f0;
+    color: var(--text-color);
     border-radius: 8px;
     font-size: 0.95rem;
     transition: background 0.2s;
